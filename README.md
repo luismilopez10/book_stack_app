@@ -1,16 +1,25 @@
-# book_stack_app
+# Book Stack App
 
-A new Flutter project.
+Book Stack App es un proyecto Flutter diseñado para explorar libros de programación.
 
-## Getting Started
+Además de la app, se desarrollaron dos paquetes:
+- Sistema de diseño: https://github.com/luismilopez10/book_stack_design_system
+- Paquete de widgets: https://github.com/luismilopez10/book_stack_widget
 
-This project is a starting point for a Flutter application.
+## Configuración inicial
 
-A few resources to get you started if this is your first Flutter project:
+1. **Descarga de dependencias**:
+    Ejecutar el siguiente comando en la terminal para instalar todas las dependencias necesarias:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+   ```bash
+   flutter pub get
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. **Generación de variables de ambiente**: 
+    Ejecutar el siguiente comando en la terminal para generar las variables de ambiente:
+
+   ```shell
+   dart run build_runner clean && dart run build_runner build --delete-conflicting-outputs
+   ```
+
+3. **Ejecutar el proyecto**
