@@ -52,16 +52,20 @@ packages:
   book_stack_design_system:
     dependency: "direct main"
     description:
-      path: "/Users/luis.lopez/development/book_stack_design_system"
-      relative: false
-    source: path
+      path: "."
+      ref: trunk
+      resolved-ref: da22f3af04613626667a8d9845379793007150eb
+      url: "https://github.com/luismilopez10/book_stack_design_system.git"
+    source: git
     version: "1.0.0"
   book_stack_widget:
     dependency: "direct main"
     description:
-      path: "/Users/luis.lopez/development/book_stack_widget"
-      relative: false
-    source: path
+      path: "."
+      ref: trunk
+      resolved-ref: "0c151d77b011b92a3c3220739a4dc792f631b7f5"
+      url: "https://github.com/luismilopez10/book_stack_widget.git"
+    source: git
     version: "1.0.0"
   boolean_selector:
     dependency: transitive
