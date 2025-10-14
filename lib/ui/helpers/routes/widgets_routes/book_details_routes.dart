@@ -1,0 +1,32 @@
+import 'package:book_stack_widget/book_stack_widget.dart';
+import 'package:flutter/material.dart';
+
+import '../../../../infrastructure/enums/navigation_type.dart';
+import '../../../../infrastructure/extensions/navigation_extension.dart';
+import '../config_router/book_details_router.dart';
+
+class BookDetailsRoutes {
+  static BookDetailsPage getBookDetailsPage(BuildContext context) {
+    return BookDetailsPage(
+      args: BookDetailsArgs(
+        language: <String, dynamic>{
+          'appBarTitle': 'Book Stack',
+          'placeHolderPath': 'assets/images/loading_books.gif',
+          'imageNotFoundPath': 'assets/images/book_image_not_found.png',
+        },
+        leftAppBarIcon: Icons.chevron_left,
+        onLeftAppBarPressed: () => Navigator.pop(context),
+      ),
+    );
+  }
+
+  static void showBookDetailsPage(
+    BuildContext context, {
+    NavigationType navigationType = NavigationType.push,
+  }) {
+    context.navigateTo(
+      BookDetailsRouter.bookDetailsRouteName,
+      navigationType: navigationType,
+    );
+  }
+}
