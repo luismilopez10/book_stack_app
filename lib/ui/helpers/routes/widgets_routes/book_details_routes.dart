@@ -7,13 +7,15 @@ import '../config_router/book_details_router.dart';
 
 class BookDetailsRoutes {
   static BookDetailsPage getBookDetailsPage(BuildContext context) {
+    final Map<String, dynamic> bookDetailsLanguage = <String, dynamic>{
+      'appBarTitle': 'Book Stack',
+      'placeHolderPath': 'assets/images/loading_books.gif',
+      'imageNotFoundPath': 'assets/images/book_image_not_found.png',
+    };
+
     return BookDetailsPage(
       args: BookDetailsArgs(
-        language: <String, dynamic>{
-          'appBarTitle': 'Book Stack',
-          'placeHolderPath': 'assets/images/loading_books.gif',
-          'imageNotFoundPath': 'assets/images/book_image_not_found.png',
-        },
+        language: bookDetailsLanguage,
         leftAppBarIcon: Icons.chevron_left,
         onLeftAppBarPressed: () => Navigator.pop(context),
       ),
