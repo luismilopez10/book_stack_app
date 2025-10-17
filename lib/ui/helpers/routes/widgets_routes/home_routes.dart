@@ -11,28 +11,45 @@ import 'book_details_routes.dart';
 
 class HomeRoutes {
   static HomePage getHomePage(BuildContext context) {
+    final Map<String, dynamic> homeLanguage = <String, dynamic>{
+      'appBarTitle': 'Book Stack',
+      'placeHolderPath': 'assets/images/loading_books.gif',
+      'imageNotFoundPath': 'assets/images/book_image_not_found.png',
+    };
+
+    final Map<String, dynamic> searchLanguage = <String, dynamic>{
+      'searchLabel': 'Buscar libro',
+      'emptySearchText': 'No hay resultados para la búsqueda',
+      'placeHolderPath': 'assets/images/loading_books.gif',
+      'imageNotFoundPath': 'assets/images/book_image_not_found.png',
+    };
+
+    final Map<String, dynamic> overlayFilterLanguage = <String, dynamic>{
+      'title': 'Ordenar por precio',
+      'sortPriceAscendingLabel': 'menor a mayor',
+      'sortPriceDescendingLabel': 'mayor a menor',
+    };
+
     return HomePage(
       args: HomeArgs(
         config: BooksConfig(bookGateway: BooksApi(context)),
-        language: <String, dynamic>{
-          'appBarTitle': 'Book Stack',
-          'placeHolderPath': 'assets/images/loading_books.gif',
-          'imageNotFoundPath': 'assets/images/book_image_not_found.png',
-        },
+        language: homeLanguage,
         midRightAppBarIcon: Icons.filter_list_outlined,
-        onMidRightAppBarPressed: () => _onMidRightAppBarPressed(context),
+        onMidRightAppBarPressed: () => _onMidRightAppBarPressed(
+          context,
+          title: overlayFilterLanguage['title']!,
+          sortPriceAscendingLabel:
+              overlayFilterLanguage['sortPriceAscendingLabel']!,
+          sortPriceDescendingLabel:
+              overlayFilterLanguage['sortPriceDescendingLabel']!,
+        ),
         rightAppBarIcon: Icons.search,
         onRightAppBarPressed: () => showSearch(
           context: context,
           delegate: BsSearchDelegate(
             args: SearchArgs(
               config: BooksConfig(bookGateway: BooksApi(context)),
-              language: <String, dynamic>{
-                'searchLabel': 'Buscar libro',
-                'emptySearchText': 'No hay resultados para la búsqueda',
-                'placeHolderPath': 'assets/images/loading_books.gif',
-                'imageNotFoundPath': 'assets/images/book_image_not_found.png',
-              },
+              language: searchLanguage,
               onSelectBook: (BookModel book) => _onSelectBook(context, book),
             ),
           ),
@@ -59,7 +76,12 @@ class HomeRoutes {
     BookDetailsRoutes.showBookDetailsPage(context);
   }
 
-  static Future<void> _onMidRightAppBarPressed(BuildContext context) async {
+  static Future<void> _onMidRightAppBarPressed(
+    BuildContext context, {
+    required String title,
+    required String sortPriceAscendingLabel,
+    required String sortPriceDescendingLabel,
+  }) async {
     await showModalBottomSheet<void>(
       context: context,
       builder: (BuildContext context) {
@@ -79,11 +101,11 @@ class HomeRoutes {
                   color: BsColors.NEUTRAL_02,
                 ),
               ),
-              const BsText('Ordenar por precio', style: BsTypography.HEADER_2),
+              BsText(title, style: BsTypography.HEADER_2),
               const SizedBox(height: BsSpacing.SPACE_MEDIUM),
               ListTile(
                 leading: const Icon(Icons.arrow_drop_up),
-                title: const BsText('menor a mayor'),
+                title: BsText(sortPriceAscendingLabel),
                 onTap: () {
                   context.read<BooksNotifier>().sortBooksByPrice(
                     filter: BookFilters.ascending,
@@ -93,7 +115,7 @@ class HomeRoutes {
               ),
               ListTile(
                 leading: const Icon(Icons.arrow_drop_down),
-                title: const BsText('mayor a menor'),
+                title: BsText(sortPriceDescendingLabel),
                 onTap: () {
                   context.read<BooksNotifier>().sortBooksByPrice(
                     filter: BookFilters.descending,
