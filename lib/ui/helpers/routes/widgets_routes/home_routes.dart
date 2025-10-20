@@ -46,12 +46,46 @@ class HomeRoutes {
         rightAppBarIcon: Icons.search,
         onRightAppBarPressed: () => showSearch(
           context: context,
-          delegate: BsSearchDelegate(
-            args: SearchArgs(
-              config: BooksConfig(bookGateway: BooksApi(context)),
-              language: searchLanguage,
-              onSelectBook: (BookModel book) => _onSelectBook(context, book),
+          delegate: BsSearchDelegate<BookModel>(
+            args: BsSearchArgs<BookModel>(
+              searchLabel: searchLanguage['searchLabel']!,
+              emptySearchText: searchLanguage['emptySearchText']!,
+              debouncerDuration: const Duration(milliseconds: 150),
             ),
+            controller: BooksSearchController(
+              context,
+              config: BooksConfig(bookGateway: BooksApi(context)),
+            ),
+            itemBuilder:
+                (
+                  BuildContext context,
+                  BookModel book,
+                  int index,
+                  bool isLoading,
+                  bool isLast,
+                ) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: BsSpacing.SPACE_MEDIUM,
+                      vertical: BsSpacing.SPACE_SMALL,
+                    ),
+                    child: BsBookCard(
+                      id: book.isbn13,
+                      title: book.title,
+                      subtitle: book.subtitle,
+                      extraText: book.price,
+                      imageUrl: book.imageUrl,
+                      url: book.url,
+                      placeHolderPath: searchLanguage['placeHolderPath']!,
+                      imageNotFoundPath: searchLanguage['imageNotFoundPath']!,
+                    ),
+                  );
+                },
+            onItemSelected: (BookModel book) {
+              final BooksNotifier booksNotifier = context.read<BooksNotifier>();
+              booksNotifier.selectedBook = book;
+              BookDetailsRoutes.showBookDetailsPage(context);
+            },
           ),
         ),
         onBookCardPressed: (BookModel book) => _onSelectBook(context, book),
@@ -96,8 +130,8 @@ class HomeRoutes {
                   top: BsSpacing.SPACE_MEDIUM,
                   bottom: BsSpacing.SPACE_MEDIUM,
                 ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(BsBorderRadius.MEDIUM),
                   color: BsColors.NEUTRAL_02,
                 ),
               ),

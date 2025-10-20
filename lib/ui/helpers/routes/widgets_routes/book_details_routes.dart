@@ -8,7 +8,7 @@ import '../config_router/book_details_router.dart';
 class BookDetailsRoutes {
   static BookDetailsPage getBookDetailsPage(BuildContext context) {
     final Map<String, dynamic> bookDetailsLanguage = <String, dynamic>{
-      'appBarTitle': 'Book Stack',
+      'appBarTitle': 'Detalles',
       'placeHolderPath': 'assets/images/loading_books.gif',
       'imageNotFoundPath': 'assets/images/book_image_not_found.png',
     };
