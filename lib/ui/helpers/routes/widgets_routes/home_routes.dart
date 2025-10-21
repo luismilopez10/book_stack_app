@@ -51,41 +51,42 @@ class HomeRoutes {
               searchLabel: searchLanguage['searchLabel']!,
               emptySearchText: searchLanguage['emptySearchText']!,
               debouncerDuration: const Duration(milliseconds: 150),
+              controller: BooksSearchController(
+                context,
+                config: BooksConfig(bookGateway: BooksApi(context)),
+              ),
+              itemBuilder:
+                  (
+                    BuildContext context,
+                    BookModel book,
+                    int index,
+                    bool isLoading,
+                    bool isLast,
+                  ) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: BsSpacing.SPACE_MEDIUM,
+                        vertical: BsSpacing.SPACE_SMALL,
+                      ),
+                      child: BsBookCard(
+                        id: book.isbn13,
+                        title: book.title,
+                        subtitle: book.subtitle,
+                        extraText: book.price,
+                        imageUrl: book.imageUrl,
+                        url: book.url,
+                        placeHolderPath: searchLanguage['placeHolderPath']!,
+                        imageNotFoundPath: searchLanguage['imageNotFoundPath']!,
+                      ),
+                    );
+                  },
+              onItemSelected: (BookModel book) {
+                final BooksNotifier booksNotifier = context
+                    .read<BooksNotifier>();
+                booksNotifier.selectedBook = book;
+                BookDetailsRoutes.showBookDetailsPage(context);
+              },
             ),
-            controller: BooksSearchController(
-              context,
-              config: BooksConfig(bookGateway: BooksApi(context)),
-            ),
-            itemBuilder:
-                (
-                  BuildContext context,
-                  BookModel book,
-                  int index,
-                  bool isLoading,
-                  bool isLast,
-                ) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: BsSpacing.SPACE_MEDIUM,
-                      vertical: BsSpacing.SPACE_SMALL,
-                    ),
-                    child: BsBookCard(
-                      id: book.isbn13,
-                      title: book.title,
-                      subtitle: book.subtitle,
-                      extraText: book.price,
-                      imageUrl: book.imageUrl,
-                      url: book.url,
-                      placeHolderPath: searchLanguage['placeHolderPath']!,
-                      imageNotFoundPath: searchLanguage['imageNotFoundPath']!,
-                    ),
-                  );
-                },
-            onItemSelected: (BookModel book) {
-              final BooksNotifier booksNotifier = context.read<BooksNotifier>();
-              booksNotifier.selectedBook = book;
-              BookDetailsRoutes.showBookDetailsPage(context);
-            },
           ),
         ),
         onBookCardPressed: (BookModel book) => _onSelectBook(context, book),

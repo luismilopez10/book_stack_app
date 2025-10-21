@@ -9,6 +9,9 @@ class BookDetailsRoutes {
   static BookDetailsPage getBookDetailsPage(BuildContext context) {
     final Map<String, dynamic> bookDetailsLanguage = <String, dynamic>{
       'appBarTitle': 'Detalles',
+      'isbn13Label': 'Isbn13:',
+      'priceLabel': 'Price:',
+      'urlLabel': 'Url:',
       'placeHolderPath': 'assets/images/loading_books.gif',
       'imageNotFoundPath': 'assets/images/book_image_not_found.png',
     };
