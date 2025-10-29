@@ -41,8 +41,12 @@ class BooksApi extends BaseApiClient implements BooksGateway {
   }
 
   @override
-  Future<(List<BookModel>?, ErrorModel?)> getBooksByQuery(String query) async {
-    final String endpoint = '${EndpointUtils.getBooksByQuery}/$query';
+  Future<(List<BookModel>?, ErrorModel?)> getBooksByQuery(
+    String query, {
+    required int pageNumber,
+  }) async {
+    final String endpoint =
+        '${EndpointUtils.getBooksByQuery}/$query/$pageNumber';
     try {
       final Uri url = Uri.https(appConfig.apiBaseUrl, endpoint);
 
